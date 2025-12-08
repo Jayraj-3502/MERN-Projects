@@ -32,9 +32,15 @@ const userSchema = new Schema(
     },
     avatarUrl: {
       type: String,
+      default: "",
     },
     avatarPublicUrl: {
       type: String,
+      default: "",
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
     todos: [
       {
