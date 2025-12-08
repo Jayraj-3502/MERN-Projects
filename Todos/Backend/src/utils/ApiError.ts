@@ -1,10 +1,16 @@
 import { Response } from "express";
 
-export default function ApiError(
-  res: Response,
-  statusCode: number = 400,
-  errorMessage: any = ""
-) {
+interface errorParams {
+  res: Response;
+  statusCode?: number;
+  errorMessage?: string | object | string[];
+}
+
+export default function ApiError({
+  res,
+  statusCode = 500,
+  errorMessage = "Something went wrong",
+}: errorParams): Response {
   return res.status(statusCode).send({
     success: false,
     error: errorMessage,

@@ -1,12 +1,18 @@
 import { Response } from "express";
 
-export default function ApiResponse(
-  res: Response,
-  statusCode: number = 200,
-  data: any = {}
-) {
+interface responceParams {
+  res: Response;
+  statusCode?: number;
+  data?: string | object | string[];
+}
+
+export default function ApiResponse({
+  res,
+  statusCode = 200,
+  data = {},
+}: responceParams): Response {
   return res.status(statusCode).send({
-    success: false,
+    success: true,
     data: data,
   });
 }

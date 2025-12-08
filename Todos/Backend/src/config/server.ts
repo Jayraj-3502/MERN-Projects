@@ -4,17 +4,16 @@ import express, {
   type Request,
   type Response,
 } from "express";
+import authRoutes from "../routes/auth.routes";
+import userRoutes from "../routes/user.routes";
+import todoRoutes from "../routes/todo.routes";
 
 const app = express();
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-app.use("/", (req: Request, res: Response) => {
-  res.send("This is response");
-});
-
-// app.use("api/v1/auth");
-// app.use("api/v1/user");
-// app.use("api/v1/todo");
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/todo", todoRoutes);
 
 export default app;
