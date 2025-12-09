@@ -1,11 +1,11 @@
-import mongoose, { Schema, Document } from "mongoose";
+import { Schema, Document, model } from "mongoose";
 
 export interface TodoInterface extends Document {
   title: String;
   isComplete: Boolean;
 }
 
-const todoSchema = new Schema(
+const todoSchema = new Schema<TodoInterface>(
   {
     title: {
       type: String,
@@ -23,4 +23,4 @@ const todoSchema = new Schema(
   }
 );
 
-export const Todo = mongoose.model("Todo", todoSchema);
+export const Todo = model<TodoInterface>("Todo", todoSchema);

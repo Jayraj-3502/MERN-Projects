@@ -1,16 +1,16 @@
-import mongoose, { Schema } from "mongoose";
-import { ref } from "process";
-import { required } from "zod/v4/core/util.cjs";
+import mongoose, { model, Schema } from "mongoose";
 
 export interface UserInterface extends Document {
-  fullname: String;
-  email: String;
-  password: String;
-  avatarUrl: String;
-  avatarPublicUrl: String;
+  fullname: string;
+  email: string;
+  password: string;
+  avatarUrl: string;
+  avatarPublicUrl: string;
+  isActive: boolean;
+  todos: Array<string>;
 }
 
-const userSchema = new Schema(
+const userSchema = new Schema<UserInterface>(
   {
     fullname: {
       type: String,
@@ -55,4 +55,4 @@ const userSchema = new Schema(
   }
 );
 
-export const User = mongoose.model("User", userSchema);
+export const User = model<UserInterface>("User", userSchema);

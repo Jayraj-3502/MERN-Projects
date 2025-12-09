@@ -4,6 +4,7 @@ import ApiError from "../utils/ApiError";
 import { User } from "../models/user.model";
 import { createUser } from "./user.controller";
 import bcrypt from "bcrypt";
+import passwordCompare from "../utils/passwordCompare";
 
 // Register User with the basic details
 export async function register(req: Request, res: Response) {
@@ -89,7 +90,7 @@ export async function login(req: Request, res: Response) {
       });
 
     // if exist then match password
-    const passwordMatched = await bcrypt.compare(password, userExist.password);
+    const passwordMatched = await passwordCompare(password, userExist.password);
 
     // if password not matched then throw error
     if (!passwordMatched)

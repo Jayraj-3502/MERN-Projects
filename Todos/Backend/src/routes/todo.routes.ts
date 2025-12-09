@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
   createTodo,
-  updateTodo,
   deleteTodo,
+  updateTodoTitle,
 } from "../controllers/todo.controller";
 
 const todoRoutes = Router();
 
 todoRoutes.post("/", createTodo);
 todoRoutes.delete("/:id", deleteTodo);
-todoRoutes.put("/:id", updateTodo);
+todoRoutes.put("/title/:id", updateTodoTitle);
 
 export default todoRoutes;
