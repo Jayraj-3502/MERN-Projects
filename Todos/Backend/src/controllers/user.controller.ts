@@ -6,6 +6,7 @@ import { User } from "../models/user.model";
 import passwordHashing from "../utils/passwordHashing";
 import { CustomRequest } from "../types/CustomRequest";
 import cloudinaryUpload from "../utils/cloudinaryUpload";
+import passwordCompare from "../utils/passwordCompare";
 
 // get user details
 export async function getUser(req: Request, res: Response) {
@@ -147,6 +148,114 @@ export async function updateAvatar(req: CustomRequest, res: Response) {
     ApiResponse({ res, statusCode: 200, data: "Avatar updated" });
   } catch (error: any | object) {
     ApiError({ res, statusCode: error.http_code || 500, errorMessage: error });
+  }
+}
+
+// password update with old one
+export async function updatePassword(req: CustomRequest, res: Response) {
+  try {
+    // check that user is logged in or not
+    const { id } = req.user as { id: string };
+    // if not then throw error
+    const userExist = await User.findById(id);
+
+    if (!userExist)
+      return ApiError({
+        res,
+        statusCode: 404,
+        errorMessage: "User not found!",
+      });
+
+    // getting all the required details from the body
+    const { oldPassword, newPassword } = req.body;
+
+    const passwordMatching = await passwordCompare(
+      oldPassword,
+      userExist.password
+    );
+
+    if (!passwordMatching)
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "Old Password is incorrect!",
+      });
+
+    // hash the new password
+    const hashedNewPassword = await passwordHashing(newPassword);
+
+    if (!hashedNewPassword)
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "Something went wrong please try again",
+      });
+
+    // update the password
+    const updatedPassword = await User.findByIdAndUpdate(
+      // user id taking form the token provided by the loggin user
+      id,
+      {
+        // setting the updated fields only and other remain as it is.
+        $set: {
+          password: hashedNewPassword,
+        },
+      }
+    );
+
+    // if password not updated then throw error
+    if (!updatedPassword)
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "Problem in updating password!",
+      });
+
+    // sending result as a success
+    ApiResponse({ res, statusCode: 200, data: "Password updated" });
+  } catch (error: any) {
+    ApiError({ res, statusCode: 500, errorMessage: error });
+  }
+}
+
+// password update with forgot
+export async function updatePasswordForgot(req: Request, res: Response) {
+  try {
+    // taking password from the body
+    const { password, email } = req.body;
+    // check if password exist or not
+    if (!password || !email)
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "Some details are missing!",
+      });
+    // hashing the password
+    const hashedPassword = await passwordHashing(password);
+    // check that password hashed or not
+    if (!hashedPassword)
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "Somehing went wrong please try again",
+      });
+    // update the password
+    const userPasswordUpdate = await User.findOneAndUpdate(
+      { email },
+      { $set: { password: hashedPassword } },
+      { new: true, runValidators: true }
+    );
+    // check that password updated or not
+    if (!userPasswordUpdate)
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "Password not updated please try again",
+      });
+    // send response as result
+    ApiResponse({ res, statusCode: 200, data: "Password Updated" });
+  } catch (error: any) {
+    ApiError({ res, statusCode: 500, errorMessage: error });
   }
 }
 

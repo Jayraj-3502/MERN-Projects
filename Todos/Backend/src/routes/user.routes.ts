@@ -5,6 +5,7 @@ import {
   deleteUser,
   getUser,
   updateAvatar,
+  updatePassword,
   updateUser,
 } from "../controllers/user.controller";
 import upload from "../config/multer";
@@ -15,7 +16,8 @@ const userRoutes = Router();
 userRoutes.get("/", getUser);
 userRoutes.post("/", createUser);
 userRoutes.put("/", authMiddleware, updateUser);
+userRoutes.put("/update/password", authMiddleware, updatePassword);
 userRoutes.put("/upload/avatar", upload.single("image"), updateAvatar);
-userRoutes.delete("/", deleteUser);
+userRoutes.delete("/", authMiddleware, deleteUser);
 
 export default userRoutes;
