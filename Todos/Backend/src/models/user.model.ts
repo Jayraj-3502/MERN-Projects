@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
+import mongoose, { model, Schema, Types } from "mongoose";
 
 export interface UserInterface extends Document {
   fullname: string;
@@ -7,7 +7,7 @@ export interface UserInterface extends Document {
   avatarUrl: string;
   avatarPublicUrl: string;
   isActive: boolean;
-  todos: Array<string>;
+  todos: mongoose.Types.ObjectId[];
 }
 
 const userSchema = new Schema<UserInterface>(
@@ -46,7 +46,6 @@ const userSchema = new Schema<UserInterface>(
       {
         type: Schema.Types.ObjectId,
         ref: "Todo",
-        required: true,
       },
     ],
   },

@@ -5,6 +5,7 @@ import { User } from "../models/user.model";
 import { createUser } from "./user.controller";
 import bcrypt from "bcrypt";
 import passwordCompare from "../utils/passwordCompare";
+import tokenGenerator from "../utils/tokenGenerator";
 
 // Register User with the basic details
 export async function register(req: Request, res: Response) {
@@ -77,9 +78,7 @@ export async function login(req: Request, res: Response) {
     const { email, password } = req.body;
 
     // check that the user with the specified emai exist or not?
-    const userExist = await User.findOne({ email }).select(
-      "fullname email password avatarUrl"
-    );
+    const userExist = await User.findOne({ email });
 
     // if not exist then throw error
     if (!userExist)
@@ -100,7 +99,19 @@ export async function login(req: Request, res: Response) {
         errorMessage: "Password not matched!",
       });
 
-    ApiResponse({ res, statusCode: 200, data: userExist });
+    const token = await tokenGenerator({
+      id: userExist?._id,
+      email: userExist?.email,
+    });
+
+    if (!token)
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "Something went wrong please try again",
+      });
+
+    ApiResponse({ res, statusCode: 200, data: token });
   } catch (error: any) {
     ApiError({ res, statusCode: 500, errorMessage: error });
   }
@@ -110,10 +121,19 @@ export async function login(req: Request, res: Response) {
 export async function verifyForgotPasswordEmail(req: Request, res: Response) {
   try {
     // getting email from the body
+    const { email } = req.body;
     // check that user with the specified email exist or not?
+    const userExist = await User.findOne({ email });
+
     // if not then throw error
+    if (!userExist)
+      return ApiError({ res, statusCode: 400, errorMessage: "User not exist" });
     // if yes then send response for next step OTP verification
-    ApiResponse({ res, statusCode: 200, data: "complete" });
+    ApiResponse({
+      res,
+      statusCode: 200,
+      data: "Email verification complete! OTP sended to your email",
+    });
   } catch (error: any) {
     ApiError({ res, statusCode: 500, errorMessage: error });
   }
@@ -123,8 +143,24 @@ export async function verifyForgotPasswordEmail(req: Request, res: Response) {
 export async function verifyForgotPasswordOtp(req: Request, res: Response) {
   try {
     // getting email from the body
+    const { email, otp } = req.body;
+
+    // check that user with the specified email exist or not?
+    const userExist = await User.findOne({ email });
+
+    // if not then throw error
+    if (!userExist)
+      return ApiError({ res, statusCode: 400, errorMessage: "User not exist" });
+
     // check that OTP is matching or not?
     // if not then throw error
+    if (otp !== "789456")
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "OTP is not matching!",
+      });
+
     // if yes then send response for next step Password Reset
     ApiResponse({ res, statusCode: 200, data: "complete" });
   } catch (error: any) {

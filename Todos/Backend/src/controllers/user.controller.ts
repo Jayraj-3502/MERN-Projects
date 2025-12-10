@@ -65,12 +65,41 @@ export async function updateUser(req: CustomRequest, res: Response) {
   try {
     // check that user is logged in or not
     // if not then throw error
-    // run validation on provided data
-    // if validation fails then throw error
+    const { id, email } = req.user as { id: string; email: string };
+
+    // // run validation on provided data
+    // const dataValidated = userSchemaValidation.parse({ ...req.body, email });
+
+    // // if validation fails then throw error
+    // if (!dataValidated)
+    //   return ApiError({
+    //     res,
+    //     statusCode: 400,
+    //     errorMessage: "Validation failure. please recheck the fields data.",
+    //   });
+
     // update the user data
+    const userUpdateDetails = await User.findByIdAndUpdate(
+      id,
+      {
+        $set: { ...req.body },
+      },
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
+
     // if update fails then throw error
+    if (!userUpdateDetails)
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "Data not updates please try again",
+      });
+
     // return "User updated" as response
-    ApiResponse({ res, statusCode: 200, data: "complete" });
+    ApiResponse({ res, statusCode: 200, data: userUpdateDetails });
   } catch (error: any) {
     ApiError({ res, statusCode: 500, errorMessage: error });
   }
@@ -139,15 +168,8 @@ export async function deleteUser(req: CustomRequest, res: Response) {
     // if yes then remove all the user details and set isActive to false
     const deletedUser = await User.findByIdAndUpdate(
       "id",
-      {
-        $set: {
-          isActive: false,
-        },
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
+      { $set: { isActive: false, todos: [] } },
+      { new: true, runValidators: true }
     );
 
     if (!deletedUser)
@@ -158,7 +180,7 @@ export async function deleteUser(req: CustomRequest, res: Response) {
       });
 
     // send response
-    ApiResponse({ res, statusCode: 200, data: "Deleted" });
+    ApiResponse({ res, statusCode: 200, data: "User Deleted" });
   } catch (error: any) {
     ApiError({ res, statusCode: 500, errorMessage: error });
   }

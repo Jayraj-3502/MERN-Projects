@@ -19,7 +19,10 @@ async function authMiddleware(
         errorMessage: "Access Denied. Token not provided",
       });
 
-    const decoded = jwt.verify(token, "as") as JwtPayload;
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_PRIVATE_KEY!
+    ) as JwtPayload;
 
     req.user = decoded;
     next();
