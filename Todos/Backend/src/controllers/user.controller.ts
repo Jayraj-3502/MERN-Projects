@@ -7,6 +7,7 @@ import passwordHashing from "../utils/passwordHashing";
 import { CustomRequest } from "../types/CustomRequest";
 import cloudinaryUpload from "../utils/cloudinaryUpload";
 import passwordCompare from "../utils/passwordCompare";
+import cloudinaryDelete from "../utils/cloudinaryDelete";
 
 // get user details
 export async function getUser(req: Request, res: Response) {
@@ -276,10 +277,29 @@ export async function deleteUser(req: CustomRequest, res: Response) {
         errorMessage: "User not found!",
       });
 
+    // deleting imgaes from cloudinary if exist
+    if (userExist.avatarPublicUrl) {
+      const result = await cloudinaryDelete(userExist.avatarPublicUrl);
+
+      if (!result)
+        return ApiError({
+          res,
+          statusCode: 400,
+          errorMessage: "Error during deletion please try again",
+        });
+    }
+
     // if yes then remove all the user details and set isActive to false
     const deletedUser = await User.findByIdAndUpdate(
       id,
-      { $set: { isActive: false, todos: [] } },
+      {
+        $set: {
+          isActive: false,
+          todos: [],
+          avatarUrl: "",
+          avatarPublicUrl: "",
+        },
+      },
       { new: true, runValidators: true }
     );
 
