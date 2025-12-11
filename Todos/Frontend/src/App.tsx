@@ -1,8 +1,11 @@
+import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup";
+
 function App() {
   return (
     <>
       <div>
-        <h1 className="text-5xl ">This is a heading</h1>
+        <Login />
       </div>
     </>
   );
