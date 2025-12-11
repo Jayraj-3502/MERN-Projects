@@ -111,6 +111,7 @@ export async function updateAvatar(req: CustomRequest, res: Response) {
   try {
     // check that user is logged in or not
     // if not the throw error
+    const { id } = req.user as { id: string };
 
     // destructured required details from cloudinaryUpload details
     const { secure_url, public_id } = await cloudinaryUpload(req.file);
@@ -126,7 +127,7 @@ export async function updateAvatar(req: CustomRequest, res: Response) {
     // update the logged in user avatar
     const updateUserAvatar = await User.findByIdAndUpdate(
       // user if taking form the token provided by the loggin user
-      "6937d1102525f1f0fa608f0c",
+      id,
       {
         // setting the updated fields only and other remain as it is.
         $set: {
@@ -263,8 +264,9 @@ export async function updatePasswordForgot(req: Request, res: Response) {
 export async function deleteUser(req: CustomRequest, res: Response) {
   try {
     // getting all the details from the auth middleware
+    const { id } = req.user as { id: string };
     // check that the loggin user email exist or not
-    const userExist = await User.findById("id");
+    const userExist = await User.findById(id);
 
     // if not then throw error
     if (!userExist || !userExist.isActive)
@@ -276,7 +278,7 @@ export async function deleteUser(req: CustomRequest, res: Response) {
 
     // if yes then remove all the user details and set isActive to false
     const deletedUser = await User.findByIdAndUpdate(
-      "id",
+      id,
       { $set: { isActive: false, todos: [] } },
       { new: true, runValidators: true }
     );

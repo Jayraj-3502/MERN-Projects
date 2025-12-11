@@ -8,13 +8,15 @@ import { Todo } from "../models/todo.model";
 export async function sortByAddedAccending(req: CustomRequest, res: Response) {
   try {
     // verify that user is legal or not
+    const { id } = req.user as { id: string };
+
     // take page number from params
     const { page } = req.params;
     // if not lega then throw error
     // access user data and short it and selet requred info only pagination also
-    const totalCount = await Todo.find({ userId: "6936c6da57767666aae62569" });
-    const todosData = await Todo.find({ userId: "6936c6da57767666aae62569" })
-      .sort({ createdAt: 1 })
+    const totalCount = await Todo.find({ userId: id });
+    const todosData = await Todo.find({ userId: id })
+      .sort({ createdAt: -1 })
       .limit(10)
       .skip(10 * (+page - 1))
       .exec();
@@ -40,13 +42,15 @@ export async function sortByAddedAccending(req: CustomRequest, res: Response) {
 export async function sortByAddedDescending(req: CustomRequest, res: Response) {
   try {
     // verify that user is legal or not
+    const { id } = req.user as { id: string };
+
     // take page number from params
     const { page } = req.params;
     // if not lega then throw error
     // access user data and short it and selet requred info only pagination also
-    const totalCount = await Todo.find({ userId: "6936c6da57767666aae62569" });
-    const todosData = await Todo.find({ userId: "6936c6da57767666aae62569" })
-      .sort({ createdAt: -1 })
+    const totalCount = await Todo.find({ userId: id });
+    const todosData = await Todo.find({ userId: id })
+      .sort({ createdAt: 1 })
       .limit(10)
       .skip(10 * (+page - 1))
       .exec();
@@ -75,13 +79,15 @@ export async function sortByLatestModifiedAccending(
 ) {
   try {
     // verify that user is legal or not
+    const { id } = req.user as { id: string };
+
     // take page number from params
     const { page } = req.params;
     // if not lega then throw error
     // access user data and short it and selet requred info only pagination also
-    const totalCount = await Todo.find({ userId: "6936c6da57767666aae62569" });
-    const todosData = await Todo.find({ userId: "6936c6da57767666aae62569" })
-      .sort({ updatedAt: 1 })
+    const totalCount = await Todo.find({ userId: id });
+    const todosData = await Todo.find({ userId: id })
+      .sort({ updatedAt: -1 })
       .limit(10)
       .skip(10 * (+page - 1))
       .exec();
@@ -110,13 +116,15 @@ export async function sortByLatestModifiedDescending(
 ) {
   try {
     // verify that user is legal or not
+    const { id } = req.user as { id: string };
+
     // take page number from params
     const { page } = req.params;
     // if not lega then throw error
     // access user data and short it and selet requred info only pagination also
-    const totalCount = await Todo.find({ userId: "6936c6da57767666aae62569" });
-    const todosData = await Todo.find({ userId: "6936c6da57767666aae62569" })
-      .sort({ updatedAt: -1 })
+    const totalCount = await Todo.find({ userId: id });
+    const todosData = await Todo.find({ userId: id })
+      .sort({ updatedAt: 1 })
       .limit(10)
       .skip(10 * (+page - 1))
       .exec();
@@ -145,13 +153,15 @@ export async function sortByDueDateAccending(
 ) {
   try {
     // verify that user is legal or not
+    const { id } = req.user as { id: string };
+
     // take page number from params
     const { page } = req.params;
     // if not lega then throw error
     // access user data and short it and selet requred info only pagination also
-    const totalCount = await Todo.find({ userId: "6936c6da57767666aae62569" });
-    const todosData = await Todo.find({ userId: "6936c6da57767666aae62569" })
-      .sort({ dueDate: 1 })
+    const totalCount = await Todo.find({ userId: id });
+    const todosData = await Todo.find({ userId: id })
+      .sort({ dueDate: -1 })
       .limit(10)
       .skip(10 * (+page - 1))
       .exec();
@@ -180,13 +190,15 @@ export async function sortByDueDateDescending(
 ) {
   try {
     // verify that user is legal or not
+    const { id } = req.user as { id: string };
+
     // take page number from params
     const { page } = req.params;
     // if not lega then throw error
     // access user data and short it and selet requred info only pagination also
-    const totalCount = await Todo.find({ userId: "6936c6da57767666aae62569" });
-    const todosData = await Todo.find({ userId: "6936c6da57767666aae62569" })
-      .sort({ dueDate: -1 })
+    const totalCount = await Todo.find({ userId: id });
+    const todosData = await Todo.find({ userId: id })
+      .sort({ dueDate: 1 })
       .limit(10)
       .skip(10 * (+page - 1))
       .exec();

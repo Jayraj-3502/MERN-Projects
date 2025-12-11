@@ -40,7 +40,6 @@ export async function createTodo(req: CustomRequest, res: Response) {
   try {
     // checking that user is logged in or not
     // if user not logged in then throw error
-    console.log("running");
     const { id, email } = req.user as { id: string; email: string };
 
     // if yes then take all the necessary details from the body
@@ -70,21 +69,6 @@ export async function createTodo(req: CustomRequest, res: Response) {
         errorMessage: "Issue in adding todo please try again",
       });
 
-    // add todo id in logged in user todos array
-    const todoAdded = await User.findByIdAndUpdate(
-      id,
-      { $push: { todos: todo } },
-      { new: true, runValidators: true }
-    );
-
-    // if not added then throw error
-    if (!todoAdded)
-      return ApiError({
-        res,
-        statusCode: 400,
-        errorMessage: "Issue in adding todo please try again",
-      });
-
     // send "Todo Added" as a success response
     ApiResponse({ res, statusCode: 200, data: "Todo Added" });
   } catch (error: any) {
@@ -93,25 +77,27 @@ export async function createTodo(req: CustomRequest, res: Response) {
 }
 
 // Update Todo Title
-export async function updateTodoTitle(req: CustomRequest, res: Response) {
+export async function updateTodoData(req: CustomRequest, res: Response) {
   try {
     // checking that user is logged in or not
     // if user not logged in then throw error
     // if yes then take all the necessary details from the body
-    const { title } = req.body;
-    const { id } = req.params;
+    const { todoId } = req.params;
 
-    // if title exist or not
-    if (!title)
+    // run validaiton
+    const todoValidaiton = await todoSchemaValidation.parse(req.body);
+
+    // if validation fails then throw error
+    if (!todoValidaiton)
       return ApiError({
         res,
-        statusCode: 404,
-        errorMessage: "Title is not provided",
+        statusCode: 400,
+        errorMessage: "Validation failure! Please check input data.",
       });
 
     // update todo with the provided details
-    const updateTodo = await Todo.findByIdAndUpdate(id, {
-      $set: { title },
+    const updateTodo = await Todo.findByIdAndUpdate(todoId, {
+      $set: { ...req.body },
     });
 
     // if todo not updated then throw error
@@ -139,11 +125,11 @@ export async function updateTodoStatus(req: CustomRequest, res: Response) {
     const { id } = req.params;
 
     // if title exist or not
-    if (!isComplete)
+    if (isComplete === undefined || isComplete === "")
       return ApiError({
         res,
         statusCode: 404,
-        errorMessage: "Title is not provided",
+        errorMessage: "Status is not provided",
       });
 
     // update todo with the provided details
