@@ -2,22 +2,23 @@ import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import InputField from "../../components/InputField";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema } from "../../Schema/signup.schema";
 
 function Signup() {
-  const form = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       fullname: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
+    resolver: zodResolver(signupSchema),
   });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = form;
 
   function onSubmit(data: object) {
     console.log("Form Submited Data: ", data);
@@ -75,6 +76,10 @@ function Signup() {
                 required: {
                   value: true,
                   message: "Password is required",
+                },
+                minLength: {
+                  value: 8,
+                  message: "Minimum password length is 8",
                 },
               })}
             />

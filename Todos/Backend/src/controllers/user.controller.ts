@@ -23,8 +23,15 @@ export async function getUser(req: Request, res: Response) {
 // create user
 export async function createUser(req: Request, res: Response) {
   try {
+    // getting required details from the body
+    let { fullname, email, password } = req.body;
+
     // verify the data by using ZOD methods
-    const userValidation = userSchemaValidation.parse(req.body);
+    const userValidation = userSchemaValidation.parse({
+      fullname,
+      email,
+      password,
+    });
 
     // if validation failed then throw error
     if (!userValidation)
@@ -35,9 +42,9 @@ export async function createUser(req: Request, res: Response) {
       });
 
     // if validation succeed then do password hashing
-    req.body.password = await passwordHashing(req.body.password);
+    password = await passwordHashing(password);
 
-    if (!req.body.password)
+    if (!password)
       return ApiError({
         res,
         statusCode: 400,
@@ -45,7 +52,7 @@ export async function createUser(req: Request, res: Response) {
       });
 
     // now create user
-    const userCreated = await User.create(req.body);
+    const userCreated = await User.create({ fullname, email, password });
 
     // if user not created then throw error
     if (!userCreated)

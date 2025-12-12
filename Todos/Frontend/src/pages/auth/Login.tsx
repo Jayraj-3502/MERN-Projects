@@ -1,3 +1,4 @@
+import { minLength } from "zod";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import InputField from "../../components/InputField";
 import { useForm } from "react-hook-form";
@@ -35,10 +36,7 @@ function Login() {
             placeholder="example@gmail.com"
             errors={errors}
             register={register("email", {
-              required: {
-                value: true,
-                message: "Email is required",
-              },
+              required: "Email is required",
             })}
           />
 
@@ -49,10 +47,7 @@ function Login() {
             placeholder="********"
             errors={errors}
             register={register("password", {
-              required: {
-                value: true,
-                message: "Password is required",
-              },
+              required: "Password is required",
             })}
           />
 

@@ -7,7 +7,6 @@ export interface UserInterface extends Document {
   avatarUrl: string;
   avatarPublicUrl: string;
   isActive: boolean;
-  todos: mongoose.Types.ObjectId[];
 }
 
 const userSchema = new Schema<UserInterface>(
@@ -42,12 +41,6 @@ const userSchema = new Schema<UserInterface>(
       type: Boolean,
       default: true,
     },
-    todos: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Todo",
-      },
-    ],
   },
   {
     timestamps: true,

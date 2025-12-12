@@ -3,15 +3,38 @@ import ApiResponse from "../utils/ApiResponse";
 import ApiError from "../utils/ApiError";
 import { User } from "../models/user.model";
 import { createUser } from "./user.controller";
-import bcrypt from "bcrypt";
 import passwordCompare from "../utils/passwordCompare";
 import tokenGenerator from "../utils/tokenGenerator";
+import userSchemaValidation from "../validators/user.validator";
 
 // Register User with the basic details
 export async function register(req: Request, res: Response) {
   try {
     // getting all the required details from the body
-    const { email } = req.body;
+    const { fullname, email, password, confirmPassword } = req.body;
+
+    // password comparison
+    if (password !== confirmPassword)
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "Password's are not matching!",
+      });
+
+    // checking validation
+    const userDataValidation = userSchemaValidation.parse({
+      fullname,
+      email,
+      password,
+    });
+
+    // if validaiton fails then throw error
+    if (!userDataValidation)
+      return ApiError({
+        res,
+        statusCode: 400,
+        errorMessage: "Validation Failure",
+      });
 
     // checking that the user with the specified email exist or not?
     const userExist = await User.findOne({ email });
@@ -31,7 +54,7 @@ export async function register(req: Request, res: Response) {
       data: "OTP sended on provided email!",
     });
   } catch (error: any) {
-    ApiError({ res, statusCode: 500, errorMessage: error });
+    ApiError({ res, statusCode: 500, errorMessage: error.message });
   }
 }
 

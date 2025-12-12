@@ -1,6 +1,6 @@
-import zod, { object, string } from "zod";
+import zod, { object } from "zod";
 
 export const loginSchema = object({
   email: zod.string().email("Invalid Emial"),
-  password: zod.string().min(6),
+  password: zod.string().min(8),
 });

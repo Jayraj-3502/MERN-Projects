@@ -10,6 +10,7 @@ function InputField({
     <div className="flex flex-col gap-1 max-w-[300px] w-full ">
       <label htmlFor={id}>{label}</label>
       <input
+        required
         className="outline-none border border-gray-300 p-3 rounded-sm focus:border-gray-500"
         type={type}
         id={id}
