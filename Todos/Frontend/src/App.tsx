@@ -1,13 +1,14 @@
-import ForgotPasswordStepper from "./pages/auth/ForgotPassword";
-import Login from "./pages/auth/Login";
-import Signup from "./pages/auth/Signup";
+import { BrowserRouter } from "react-router";
+import AuthRoutes from "./routes/AuthRoutes";
+import TodoRoutes from "./routes/TodoRoutes";
 
 function App() {
   return (
     <>
-      <div>
-        <ForgotPasswordStepper />
-      </div>
+      <BrowserRouter>
+        <AuthRoutes />
+        <TodoRoutes />
+      </BrowserRouter>
     </>
   );
 }
