@@ -1,2 +1,200 @@
 // const baseURL: string = "safssf";
-export const userLoggedin: boolean = false;
+export const userLoggedin: boolean = true;
+
+export const buttonColors = {
+  "bg-blue": "bg-blue-500",
+  "bg-red": "bg-red-500",
+};
+
+export interface TodoStructure {
+  _id: string;
+  title: string;
+  isComplete: boolean;
+  userId: string;
+  dueDate: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const todos: TodoStructure[] = [
+  {
+    _id: "693944f695be79cd91b83c67",
+    title: "Setup backend authentication",
+    isComplete: false,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-10T10:01:26.096+00:00",
+    createdAt: "2025-12-09T09:15:00.000+00:00",
+    updatedAt: "2025-12-09T09:15:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c68",
+    title: "Create user registration flow",
+    isComplete: true,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-11T14:00:00.000+00:00",
+    createdAt: "2025-12-09T10:00:00.000+00:00",
+    updatedAt: "2025-12-10T11:00:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c69",
+    title: "Implement JWT authentication",
+    isComplete: true,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-12T12:30:00.000+00:00",
+    createdAt: "2025-12-09T11:30:00.000+00:00",
+    updatedAt: "2025-12-10T08:20:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c70",
+    title: "Design database schemas",
+    isComplete: false,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-13T09:00:00.000+00:00",
+    createdAt: "2025-12-10T07:00:00.000+00:00",
+    updatedAt: "2025-12-10T07:00:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c71",
+    title: "Build todo CRUD APIs",
+    isComplete: false,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-14T18:00:00.000+00:00",
+    createdAt: "2025-12-10T08:45:00.000+00:00",
+    updatedAt: "2025-12-10T08:45:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c72",
+    title: "Write API validation schemas",
+    isComplete: true,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-15T16:00:00.000+00:00",
+    createdAt: "2025-12-10T10:30:00.000+00:00",
+    updatedAt: "2025-12-11T09:00:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c73",
+    title: "Integrate frontend with backend",
+    isComplete: false,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-16T17:00:00.000+00:00",
+    createdAt: "2025-12-11T07:45:00.000+00:00",
+    updatedAt: "2025-12-11T07:45:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c74",
+    title: "Create reusable UI components",
+    isComplete: true,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-17T11:00:00.000+00:00",
+    createdAt: "2025-12-11T09:00:00.000+00:00",
+    updatedAt: "2025-12-11T12:00:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c75",
+    title: "Add protected routes",
+    isComplete: true,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-18T15:00:00.000+00:00",
+    createdAt: "2025-12-11T10:00:00.000+00:00",
+    updatedAt: "2025-12-11T14:00:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c76",
+    title: "Implement forgot password flow",
+    isComplete: false,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-19T19:00:00.000+00:00",
+    createdAt: "2025-12-11T11:30:00.000+00:00",
+    updatedAt: "2025-12-11T11:30:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c77",
+    title: "Optimize database queries",
+    isComplete: true,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-20T10:00:00.000+00:00",
+    createdAt: "2025-12-12T08:00:00.000+00:00",
+    updatedAt: "2025-12-12T10:30:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c78",
+    title: "Add pagination to todo list",
+    isComplete: false,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-21T13:00:00.000+00:00",
+    createdAt: "2025-12-12T09:15:00.000+00:00",
+    updatedAt: "2025-12-12T09:15:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c79",
+    title: "Implement search functionality",
+    isComplete: true,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-22T17:00:00.000+00:00",
+    createdAt: "2025-12-12T10:45:00.000+00:00",
+    updatedAt: "2025-12-12T14:00:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c80",
+    title: "Add sorting by due date",
+    isComplete: false,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-23T18:00:00.000+00:00",
+    createdAt: "2025-12-12T11:30:00.000+00:00",
+    updatedAt: "2025-12-12T11:30:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c81",
+    title: "Improve UI responsiveness",
+    isComplete: true,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-24T16:00:00.000+00:00",
+    createdAt: "2025-12-13T08:30:00.000+00:00",
+    updatedAt: "2025-12-13T12:00:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c82",
+    title: "Add loading and error states",
+    isComplete: false,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-25T12:00:00.000+00:00",
+    createdAt: "2025-12-13T09:45:00.000+00:00",
+    updatedAt: "2025-12-13T09:45:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c83",
+    title: "Write unit tests for services",
+    isComplete: true,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-26T15:00:00.000+00:00",
+    createdAt: "2025-12-13T10:30:00.000+00:00",
+    updatedAt: "2025-12-14T08:00:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c84",
+    title: "Prepare deployment configs",
+    isComplete: false,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-27T18:00:00.000+00:00",
+    createdAt: "2025-12-14T09:00:00.000+00:00",
+    updatedAt: "2025-12-14T09:00:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c85",
+    title: "Deploy application to cloud",
+    isComplete: true,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-28T20:00:00.000+00:00",
+    createdAt: "2025-12-14T10:15:00.000+00:00",
+    updatedAt: "2025-12-14T14:30:00.000+00:00",
+  },
+  {
+    _id: "693944f695be79cd91b83c86",
+    title: "Post-deployment monitoring setup",
+    isComplete: false,
+    userId: "6936c6da57767666aae62569",
+    dueDate: "2025-12-29T11:00:00.000+00:00",
+    createdAt: "2025-12-15T08:45:00.000+00:00",
+    updatedAt: "2025-12-15T08:45:00.000+00:00",
+  },
+];
