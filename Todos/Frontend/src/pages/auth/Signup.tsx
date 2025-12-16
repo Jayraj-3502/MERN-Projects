@@ -10,7 +10,6 @@ import type { registerUserInterface } from "../../features/auth/authTypes";
 import { useState } from "react";
 import { Link } from "react-router";
 import { otpSchema } from "../../Schema/allInOneSchema";
-import { maxLength, minLength } from "zod";
 
 function Signup() {
   const dispatch: any = useDispatch();

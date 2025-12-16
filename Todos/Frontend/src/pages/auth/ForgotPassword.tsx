@@ -8,12 +8,11 @@ import {
 } from "../../Schema/allInOneSchema";
 import InputField from "../../components/InputField";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
-import PasswordSteper from "../../components/PasswordSteper";
 import { Link } from "react-router";
+import { Box, Step, StepLabel, Stepper } from "@mui/material";
 
 const ForgotPasswordStepper = () => {
-  const [step, setStep] = useState(1);
-
+  const [activeStep, setActiveStep] = useState(0);
   // Email form
   const {
     register: registerEmail,
@@ -44,14 +43,12 @@ const ForgotPasswordStepper = () => {
   // -------------------- HANDLERS --------------------
   const handleEmail = (data: any) => {
     console.log("Email submitted:", data);
-    stepDetails[0].status = "Complete";
-    setStep(2);
+    setActiveStep(1);
   };
 
   const handleOtp = (data: any) => {
     console.log("OTP submitted:", data);
-    stepDetails[1].status = "Complete";
-    setStep(3);
+    setActiveStep(2);
   };
 
   const handlePassword = (data: any) => {
@@ -59,40 +56,27 @@ const ForgotPasswordStepper = () => {
     alert("Password updated successfully!");
   };
 
-  const [stepDetails, setStepDetails] = useState([
-    {
-      number: 1,
-      title: "Email Verification",
-      status: "Pending",
-    },
-    {
-      number: 2,
-      title: "OTP Verification",
-      status: "Pending",
-    },
-    {
-      number: 3,
-      title: "Password Update",
-      status: "Pending",
-    },
-  ]);
+  const stepDetails = [
+    "Email Verification",
+    "OTP Verification",
+    "Password Update",
+  ];
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg border">
       {/* --- Step Indicator --- */}
-      <div className="flex justify-between mb-6">
-        {stepDetails.map((value, index) => (
-          <PasswordSteper
-            key={index}
-            valueNumber={value.number}
-            valueStatus={value.status}
-            valueTitle={value.title}
-          />
-        ))}
-      </div>
+      <Box sx={{ width: "100%" }}>
+        <Stepper activeStep={activeStep} alternativeLabel>
+          {stepDetails.map((step) => (
+            <Step key={step}>
+              <StepLabel>{step}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      </Box>
 
       {/* Step 1 email verification and send OTP */}
-      {step === 1 && (
+      {activeStep === 0 && (
         <form onSubmit={submitEmail(handleEmail)} className="space-y-4">
           <InputField
             type="email"
@@ -108,7 +92,7 @@ const ForgotPasswordStepper = () => {
       )}
 
       {/* Step 2 where we are taking otp are matching it with the one we have in DB  */}
-      {step === 2 && (
+      {activeStep === 1 && (
         <form onSubmit={submitOtp(handleOtp)} className="space-y-4">
           <InputField
             type="text"
@@ -124,7 +108,7 @@ const ForgotPasswordStepper = () => {
               type="button"
               text="Back"
               onClick={() => {
-                setStep(1);
+                setActiveStep(0);
               }}
             />
 
@@ -134,7 +118,7 @@ const ForgotPasswordStepper = () => {
       )}
 
       {/* Step 3 where we taking password and update it  */}
-      {step === 3 && (
+      {activeStep === 2 && (
         <form onSubmit={submitPass(handlePassword)} className="space-y-4">
           <InputField
             type="password"
@@ -159,7 +143,7 @@ const ForgotPasswordStepper = () => {
               type="button"
               text="Back"
               onClick={() => {
-                setStep(2);
+                setActiveStep(1);
               }}
             />
 
