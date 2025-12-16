@@ -9,6 +9,7 @@ import {
 import InputField from "../../components/InputField";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import PasswordSteper from "../../components/PasswordSteper";
+import { Link } from "react-router";
 
 const ForgotPasswordStepper = () => {
   const [step, setStep] = useState(1);
@@ -166,6 +167,18 @@ const ForgotPasswordStepper = () => {
           </div>
         </form>
       )}
+
+      <div className="flex flex-col items-center mt-5">
+        Already have account or want to create?
+        <div className="flex flex-row gap-10">
+          <Link to={"/signup"} className="text-blue-500 font-bold">
+            Signup
+          </Link>
+          <Link to={"/login"} className="text-blue-500 font-bold">
+            Login
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

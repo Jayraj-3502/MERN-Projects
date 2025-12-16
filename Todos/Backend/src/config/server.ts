@@ -4,6 +4,7 @@ import express, {
   type Request,
   type Response,
 } from "express";
+import cors from "cors";
 import authRoutes from "../routes/auth.routes";
 import userRoutes from "../routes/user.routes";
 import todoRoutes from "../routes/todo.routes";
@@ -12,6 +13,7 @@ import filterRoutes from "../routes/filter.routes";
 const app = express();
 app.use(json());
 app.use(urlencoded({ extended: true }));
+app.use(cors());
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);

@@ -2,6 +2,7 @@ import { minLength } from "zod";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import InputField from "../../components/InputField";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router";
 
 function Login() {
   const form = useForm({
@@ -53,8 +54,18 @@ function Login() {
 
           <PrimaryButton text="Submit" />
         </form>
+        <div className="mt-3 text-right">
+          <Link to={"/forgot-password"} className="text-blue-500">
+            Forgot Password?
+          </Link>
+        </div>
         <hr className="w-full my-5" />
-        <div className="text-center">Don't have an accoung? Signup</div>
+        <div className="text-center">
+          Don't have an accoung?{" "}
+          <Link to={"/signup"} className="text-blue-500 font-bold">
+            Signup
+          </Link>
+        </div>
       </div>
     </div>
   );

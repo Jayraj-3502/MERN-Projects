@@ -5,13 +5,17 @@ function InputField({
   placeholder = "",
   errors = {} as any,
   register = {},
+  inputFieldClassName = "",
+  labelClassName = "",
 }) {
   return (
     <div className="flex flex-col gap-1 max-w-[300px] w-full ">
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} className={`${labelClassName}`}>
+        {label}
+      </label>
       <input
         required
-        className="outline-none border border-gray-300 p-3 rounded-sm focus:border-gray-500"
+        className={`outline-none border border-gray-300 p-3 rounded-sm focus:border-gray-500 ${inputFieldClassName}`}
         type={type}
         id={id}
         placeholder={placeholder}
