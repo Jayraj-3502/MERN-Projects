@@ -1,10 +1,10 @@
-import { Component, useEffect } from "react";
+import { useEffect } from "react";
 import SecondartButton from "./buttons/SecondartButton";
 
 const Popup = ({
   isOpen = false,
   title = "",
-  children = "",
+  children = <></>,
   onClose = () => {},
   footer = <></>,
 }) => {

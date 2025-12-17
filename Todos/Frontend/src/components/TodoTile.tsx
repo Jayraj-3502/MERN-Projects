@@ -2,13 +2,21 @@ import { MdDelete } from "react-icons/md";
 
 interface TodoTileProps {
   title: string;
+  onClick: () => void;
   onEdit: () => void;
   onDelete: () => void;
 }
 
-function TodoTile({ title = "", onDelete = () => {} }: TodoTileProps) {
+function TodoTile({
+  title = "",
+  onDelete = () => {},
+  onClick = () => {},
+}: TodoTileProps) {
   return (
-    <div className="group relative flex items-center justify-between rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 py-3 px-5 shadow-sm cursor-pointer ">
+    <div
+      className="group relative flex items-center justify-between rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 py-3 px-5 shadow-sm cursor-pointer "
+      onClick={onClick}
+    >
       {/* Decorative gradient overlay */}
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-pink-500/5 transition-all duration-300"></div>
 

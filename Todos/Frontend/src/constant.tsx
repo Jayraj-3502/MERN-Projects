@@ -1,5 +1,5 @@
 export const baseURL: string = "http://localhost:3000/api/v1";
-export const userLoggedin: boolean = false;
+export const userLoggedin: boolean = true;
 
 export const buttonColors = {
   "bg-blue": "bg-blue-500",
