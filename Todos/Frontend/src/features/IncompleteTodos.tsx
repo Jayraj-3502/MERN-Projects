@@ -14,7 +14,7 @@ function IncompleteTodos({ todos }: IncompleteTodosProps) {
   const [popupTodoDetails, setPopupTodoDetails] = useState({
     _id: "test_id",
     title: "test_title",
-    isComplete: "false",
+    isComplete: false,
     dueDate: "test_due_date",
     formatedDueDate: "",
   });
@@ -22,6 +22,7 @@ function IncompleteTodos({ todos }: IncompleteTodosProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   async function popupTodoDetailsUpdate(todo: any) {
+    console.log(todo);
     todo.formatedDueDate = await dateFormater(todo.dueDate);
     setPopupTodoDetails({ ...todo });
     setIsPopupOpen(true);
@@ -62,7 +63,10 @@ function IncompleteTodos({ todos }: IncompleteTodosProps) {
               Title: <span>{popupTodoDetails?.title}</span>
             </div>
             <div>
-              Is Complete: <span>{popupTodoDetails?.isComplete}</span>
+              Is Complete:{" "}
+              <span>
+                {popupTodoDetails?.isComplete ? "Completed" : "Pending"}
+              </span>
             </div>
             <div>
               Due Date: <span>{popupTodoDetails?.formatedDueDate}</span>
