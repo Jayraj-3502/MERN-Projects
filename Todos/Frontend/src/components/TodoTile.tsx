@@ -1,15 +1,17 @@
 import { MdDelete } from "react-icons/md";
+import { FaCircleInfo, FaInfo } from "react-icons/fa6";
 
 interface TodoTileProps {
   title: string;
   onClick: () => void;
-  onEdit: () => void;
-  onDelete: () => void;
+  onInfo: () => void;
+  onDelete: (event: any) => void;
 }
 
 function TodoTile({
   title = "",
-  onDelete = () => {},
+  onInfo = () => {},
+  onDelete = (event: any) => {},
   onClick = () => {},
 }: TodoTileProps) {
   return (
@@ -18,7 +20,7 @@ function TodoTile({
       onClick={onClick}
     >
       {/* Decorative gradient overlay */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-pink-500/5 transition-all duration-300"></div>
+      <div className="absolute inset-0 rounded-2xl "></div>
 
       {/* Content wrapper */}
       <div className="relative flex items-center justify-between w-full">
@@ -30,6 +32,12 @@ function TodoTile({
 
         {/* Action Buttons */}
         <div className="flex gap-2 ml-4">
+          <button
+            onClick={onInfo}
+            className="text-xl p-1.5 bg-blue-500 hover:bg-blue-700 text-white rounded-full cursor-pointer"
+          >
+            <FaInfo />
+          </button>
           <button
             onClick={onDelete}
             className="text-xl p-1.5 bg-red-500 hover:bg-red-700 text-white rounded-full cursor-pointer"

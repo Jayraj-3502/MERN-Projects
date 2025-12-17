@@ -20,12 +20,16 @@ function IncompleteTodos({ todos }: IncompleteTodosProps) {
   });
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
   async function popupTodoDetailsUpdate(todo: any) {
-    console.log(todo);
     todo.formatedDueDate = await dateFormater(todo.dueDate);
     setPopupTodoDetails({ ...todo });
     setIsPopupOpen(true);
+  }
+
+  function deletePopupTodo(todo: any) {
+    setIsDeletePopupOpen(true);
   }
 
   function popupEditButton() {
@@ -45,11 +49,13 @@ function IncompleteTodos({ todos }: IncompleteTodosProps) {
           <TodoTile
             key={todo?.["_id"]}
             title={todo?.["title"]}
-            onEdit={() => {}}
-            onDelete={() => {}}
-            onClick={() => {
+            onInfo={() => {
               popupTodoDetailsUpdate(todo);
             }}
+            onDelete={() => {
+              deletePopupTodo(todo);
+            }}
+            onClick={() => {}}
           />
         );
       })}
@@ -79,8 +85,35 @@ function IncompleteTodos({ todos }: IncompleteTodosProps) {
           </div>
         }
       />
+
+      <DeletePopup
+        isOpen={isDeletePopupOpen}
+        onClose={() => {
+          setIsDeletePopupOpen(false);
+        }}
+      />
     </>
   );
 }
 
 export default IncompleteTodos;
+
+function DeletePopup({ isOpen = false, onClose = () => {} }) {
+  return (
+    <Popup
+      isOpen={isOpen}
+      title={"Delete Popup"}
+      children={
+        <div>
+          <p>Are you sure you want to delete this todo?</p>
+        </div>
+      }
+      onClose={onClose}
+      footer={
+        <div>
+          <button>Delete</button>
+        </div>
+      }
+    />
+  );
+}
